@@ -11,27 +11,27 @@ import (
 )
 
 type IcyConnWrapper struct {
-    net.Conn
-    haveReadAny bool
+	net.Conn
+	haveReadAny bool
 }
 
 func (i *IcyConnWrapper) Read(b []byte) (int, error) {
-    if i.haveReadAny {
-        return i.Conn.Read(b)
-    }
-    i.haveReadAny = true
-    //bounds checking ommitted. There are a few ways this can go wrong.
-    //always check array sizes and returned n.
-    n, err := i.Conn.Read(b[:3])
-    if err != nil {
-        return n, err
-    }
-    if string(b[:3]) == "ICY" {
-        //write Correct http response into buffer
-        copy(b, []byte("HTTP/1.1"))
-        return 8, nil
-    }
-    return n, nil
+	if i.haveReadAny {
+		return i.Conn.Read(b)
+	}
+	i.haveReadAny = true
+	//bounds checking ommitted. There are a few ways this can go wrong.
+	//always check array sizes and returned n.
+	n, err := i.Conn.Read(b[:3])
+	if err != nil {
+		return n, err
+	}
+	if string(b[:3]) == "ICY" {
+		//write Correct http response into buffer
+		copy(b, []byte("HTTP/1.1"))
+		return 8, nil
+	}
+	return n, nil
 }
 
 // MetadataCallbackFunc is the type of the function called when the stream metadata changes
