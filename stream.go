@@ -53,7 +53,7 @@ func Open(url string) (*Stream, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	req.Header.Add("accept", "*/*")
 	req.Header.Add("user-agent", "iTunes/12.9.2 (Macintosh; OS X 10.14.3) AppleWebKit/606.4.5")
-	req.Header.Add("icy-metadata", "1")
+	req.Header.Add("icy-metadata", "0")
 
 	// Timeout for establishing the connection.
 	// We don't want for the stream to timeout while we're reading it, but
