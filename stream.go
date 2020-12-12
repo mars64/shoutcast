@@ -79,10 +79,6 @@ func Open(url string) (*Stream, error) {
 	req.Header.Add("user-agent", "speakergeek")
 	req.Header.Add("icy-metadata", "1")
 
-	// Timeout for establishing the connection.
-	// We don't want for the stream to timeout while we're reading it, but
-	// we do want a timeout for establishing the connection to the server.
-	dialer := &net.Dialer{Timeout: 5 * time.Second}
 	transport := &http.Transport{
 		Dial: func(network, a string) (net.Conn, error) {
 			realConn, err := net.Dial(network, a)
